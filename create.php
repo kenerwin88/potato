@@ -2,37 +2,14 @@
 include 'header.php';
 $DONE = false;
 
-		if (isset($_POST['submit'])) {
-		$GoalLaunchDate = date('l, m/d/Y H:i:s', mktime($_POST['hour'], $_POST['minute'], 0, $_POST['month'], $_POST['day'], $_POST['year']));
-			$CurrentPotatoFileName = "potatoes/potato-".$_POST['name'].".xml";
-			   $writer = new XMLWriter();  
-			   $writer->openURI($CurrentPotatoFileName);   
-			   $writer->setIndent(true);
-			   $writer->setIndentString("    ");
-			   $writer->startElement('xml');  
-		       $writer->writeElement('name', $_POST['name']);  
-		       $writer->writeElement('startDate', date('l, m/d/Y H:i:s'));
-		       $writer->writeElement('goalLaunchDate', $GoalLaunchDate);
-		       $writer->writeElement('done', 'no');
-		       $writer->writeElement('status', 'Cold');
-		       $writer->writeElement('ReleaseManager', $_POST['ReleaseManager']);
-		       $writer->writeElement('BuildAndRelease', $_POST['BuildAndRelease']);
-		       $writer->writeElement('SiteOps', $_POST['SiteOps']);
-		       $writer->writeElement('QA', $_POST['QA']);
-		           $writer->startElement('timeline');
-		           	$writer->startElement('segment');
-			           	$writer->writeElement('team', 'BuildAndRelease');
-			           	$writer->writeElement('step', 1);
-			           	$writer->writeElement('startDate', date('l, m/d/Y H:i:s'));
-			           	$writer->writeElement('endDate', 'N/A');
-			           	$writer->writeElement('notes', 'Package Created');
-		           	$writer->endElement();
-		           
-		           $writer->endElement();
-		       $writer->endElement();
-			   $writer->endDocument();   
-			   $writer->flush(); 
-			}
+if (isset($_POST['submit'])) {
+	$timeLine[] = new Segment('BuildAndRelease', '1', CURRENTDATE, 'N/A', 'Package Created');
+	$goalLaunchDate = date('l, m/d/Y H:i:s', mktime($_POST['hour'], $_POST['minute'], 0, $_POST['month'], $_POST['day'], $_POST['year']));
+	$potato = new Potato( $_POST['name'], 'cold', date('l, m/d/Y H:i:s'), 
+		              	  $goalLaunchDate, $timeLine, $_POST['ReleaseManager'], $_POST['BuildAndRelease'], 
+		               	  $_POST['SiteOps'], $_POST['QA'], 'no');
+	savePotato($potato);
+}
 
 
 if (isset($_GET['currentPotato'])) {

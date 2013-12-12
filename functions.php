@@ -5,10 +5,11 @@ date_default_timezone_set('America/Indiana/Indianapolis'); # Set timezone to mak
 
 function loadPotato( $xml ) {
 	$PotatoXML = simplexml_load_file( $xml );
+	$timeLine = array();
 	foreach ($PotatoXML->timeline->segment as $segment) {
 		$timeLine[] = new Segment($segment->team, $segment->step, $segment->startDate, $segment->endDate, $segment->notes);
 	}
-	return new Potato( $PotatoXML->name, $PotatoXML->status, $PotatoXML->lastChanged, $PotatoXML->startDate, 
+	return new Potato( $PotatoXML->name, $PotatoXML->status, $PotatoXML->startDate, 
 		               $PotatoXML->goalLaunchDate, $timeLine, $PotatoXML->ReleaseManager, $PotatoXML->BuildAndRelease, 
 		               $PotatoXML->SiteOps, $PotatoXML->QA, $PotatoXML->done );
 }
@@ -183,39 +184,38 @@ function savePotato($potato) {
 	$selectedPotatoFileName = "potatoes/potato-".$potato->name.".xml";
 	$donePotatoFileName = "potatoes/potato-".$potato->name."-DONE.xml";
 	if ($potato->done=="yes") {
-	   	rename($selectedPotatoFileName, $donePotatoFileName);
+		rename($selectedPotatoFileName, $donePotatoFileName);
 		echo "THIS RELEASE HAS BEEN COMPLETED, REDIRECTING TO MAIN INDEX in 5 SECONDS!";
 		$selectedPotatoFileName = $donePotatoFileName;
 	}
-   $writer = new XMLWriter();  
-   $writer->openURI($selectedPotatoFileName);   
-   $writer->setIndent(true);
-   $writer->setIndentString("    ");
-   $writer->startElement('xml');  
-   $writer->writeElement('name', $potato->name);  
-   $writer->writeElement('startDate', $potato->startDate);
-   $writer->writeElement('goalLaunchDate', $potato->goalLaunchDate);
-   if ($potato->done=="yes") {$writer->writeElement('done', 'yes');}
-   else {$writer->writeElement('done', $potato->done);}
-   $writer->writeElement('status', $potato->status);
-   $writer->writeElement('ReleaseManager', $potato->ReleaseManager);
-   $writer->writeElement('BuildAndRelease', $potato->BuildAndRelease);
-   $writer->writeElement('SiteOps', $potato->SiteOps);
-   $writer->writeElement('QA', $potato->QA);
-       $writer->startElement('timeline');
-       foreach ($potato->timeLine as $Segment) {
-       	$writer->startElement('segment');
-           	$writer->writeElement('team', $Segment->team);
-           	$writer->writeElement('step', $Segment->step);
-           	$writer->writeElement('startDate', $Segment->startDate);
-           	$writer->writeElement('endDate', $Segment->endDate);
-           	$writer->writeElement('notes', $Segment->notes);
-       	$writer->endElement();
-       }
-       $writer->endElement();
-   $writer->endElement();
-   $writer->endDocument();   
-   $writer->flush(); 
+	$writer = new XMLWriter();  
+	$writer->openURI($selectedPotatoFileName);   
+	$writer->setIndent(true);
+	$writer->setIndentString("    ");
+	$writer->startElement('xml');  
+	$writer->writeElement('name', $potato->name);  
+	$writer->writeElement('startDate', $potato->startDate);
+	$writer->writeElement('goalLaunchDate', $potato->goalLaunchDate);
+	$writer->writeElement('done', $potato->done);
+	$writer->writeElement('status', $potato->status);
+	$writer->writeElement('ReleaseManager', $potato->ReleaseManager);
+	$writer->writeElement('BuildAndRelease', $potato->BuildAndRelease);
+	$writer->writeElement('SiteOps', $potato->SiteOps);
+	$writer->writeElement('QA', $potato->QA);
+	$writer->startElement('timeline');
+	foreach ($potato->timeLine as $Segment) {
+		$writer->startElement('segment');
+		$writer->writeElement('team', $Segment->team);
+		$writer->writeElement('step', $Segment->step);
+		$writer->writeElement('startDate', $Segment->startDate);
+		$writer->writeElement('endDate', $Segment->endDate);
+		$writer->writeElement('notes', $Segment->notes);
+		$writer->endElement();
+	}
+	$writer->endElement();
+	$writer->endElement();
+	$writer->endDocument();   
+$writer->flush(); 
 }
 
 function processPOST( $POST, $selectedPotato ) {

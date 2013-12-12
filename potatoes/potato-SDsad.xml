@@ -1,0 +1,20 @@
+<xml>
+    <name>SDsad</name>
+    <startDate>Thursday, 12/12/2013 17:16:59</startDate>
+    <goalLaunchDate>Friday, 12/20/2013 00:00:00</goalLaunchDate>
+    <done>done</done>
+    <status>cold</status>
+    <ReleaseManager>carried@angieslist.com</ReleaseManager>
+    <BuildAndRelease>balajiv@angieslist.com</BuildAndRelease>
+    <SiteOps>kener@angieslist.com</SiteOps>
+    <QA>andreww@angieslist.com</QA>
+    <timeline>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>1</step>
+            <startDate>Thursday, 12/12/2013 17:16:59</startDate>
+            <endDate>N/A</endDate>
+            <notes>Package Created</notes>
+        </segment>
+    </timeline>
+</xml>

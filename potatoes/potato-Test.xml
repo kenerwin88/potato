@@ -27,6 +27,41 @@
             <team>QA</team>
             <step>2</step>
             <startDate>Thursday, 12/12/2013 16:12:46</startDate>
+            <endDate>Thursday, 12/12/2013 16:22:44</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Thursday, 12/12/2013 16:22:44</startDate>
+            <endDate>Thursday, 12/12/2013 16:25:06</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Thursday, 12/12/2013 16:25:06</startDate>
+            <endDate>Thursday, 12/12/2013 16:25:11</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>2</step>
+            <startDate>Thursday, 12/12/2013 16:25:11</startDate>
+            <endDate>Thursday, 12/12/2013 16:25:15</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>1</step>
+            <startDate>Thursday, 12/12/2013 16:25:15</startDate>
+            <endDate>Thursday, 12/12/2013 16:40:56</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>P</step>
+            <startDate>Thursday, 12/12/2013 16:40:56</startDate>
             <endDate>N/A</endDate>
             <notes></notes>
         </segment>
