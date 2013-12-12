@@ -1,0 +1,20 @@
+<xml>
+    <name>131218IN</name>
+    <startDate>Wednesday, 12/11/2013 14:33:05</startDate>
+    <goalLaunchDate>Thursday, 12/19/2013 00:00:00</goalLaunchDate>
+    <done>no</done>
+    <status>Cold</status>
+    <ReleaseManager>carried@angieslist.com</ReleaseManager>
+    <BuildAndRelease>balajiv@angieslist.com</BuildAndRelease>
+    <SiteOps>kener@angieslist.com</SiteOps>
+    <QA>andreww@angieslist.com</QA>
+    <timeline>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>10</step>
+            <startDate>Wednesday, 12/11/2013 22:50:03</startDate>
+            <endDate>N/A</endDate>
+            <notes></notes>
+        </segment>
+    </timeline>
+</xml>

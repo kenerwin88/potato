@@ -1,0 +1,83 @@
+<xml>
+    <name>M131210.1</name>
+    <startDate>Tuesday, 12/10/2013 15:22:05</startDate>
+    <goalLaunchDate>Wednesday, 12/18/2013 23:50:00</goalLaunchDate>
+    <done>yes</done>
+    <status>Cold</status>
+    <ReleaseManager>carried@angieslist.com</ReleaseManager>
+    <BuildAndRelease>jodyt@angieslist.com</BuildAndRelease>
+    <SiteOps>kener@angieslist.com</SiteOps>
+    <QA>andreww@angieslist.com</QA>
+    <timeline>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>1</step>
+            <startDate>Tuesday, 12/10/2013 15:22:05</startDate>
+            <endDate>Tuesday, 12/10/2013 15:24:42</endDate>
+            <notes>Package Created</notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>4</step>
+            <startDate>Tuesday, 12/10/2013 15:24:42</startDate>
+            <endDate>Tuesday, 12/10/2013 15:25:37</endDate>
+            <notes>Remember, the SQL thing is messed up!</notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>4</step>
+            <startDate>Tuesday, 12/10/2013 15:25:37</startDate>
+            <endDate>Tuesday, 12/10/2013 15:26:02</endDate>
+            <notes>Remember, the SQL thing is messed up!</notes>
+        </segment>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>P</step>
+            <startDate>Tuesday, 12/10/2013 15:26:02</startDate>
+            <endDate>Tuesday, 12/10/2013 15:27:01</endDate>
+            <notes>TESTTSTTT</notes>
+        </segment>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>5</step>
+            <startDate>Tuesday, 12/10/2013 15:27:01</startDate>
+            <endDate>Tuesday, 12/10/2013 15:27:39</endDate>
+            <notes>Please work.</notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>4</step>
+            <startDate>Tuesday, 12/10/2013 15:27:39</startDate>
+            <endDate>Tuesday, 12/10/2013 15:28:29</endDate>
+            <notes>Make sure you don't rerun the DB scripts in prod!</notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>4</step>
+            <startDate>Tuesday, 12/10/2013 15:28:29</startDate>
+            <endDate>Tuesday, 12/10/2013 15:28:41</endDate>
+            <notes>Make sure you don't rerun the DB scripts in prod!</notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>4</step>
+            <startDate>Tuesday, 12/10/2013 15:28:41</startDate>
+            <endDate>Tuesday, 12/10/2013 15:29:27</endDate>
+            <notes>Make sure you don't rerun the DB scripts in prod!</notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>4</step>
+            <startDate>Tuesday, 12/10/2013 15:29:27</startDate>
+            <endDate>Wednesday, 12/11/2013 18:10:29</endDate>
+            <notes>Make sure you don't rerun the DB scripts in prod!</notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>10</step>
+            <startDate>Wednesday, 12/11/2013 18:10:29</startDate>
+            <endDate>N/A</endDate>
+            <notes></notes>
+        </segment>
+    </timeline>
+</xml>

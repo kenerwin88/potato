@@ -1,0 +1,111 @@
+<xml>
+    <name>131209IN</name>
+    <startDate>Wednesday, 12/04/2013 8:10:40</startDate>
+    <goalLaunchDate>Monday, 12/09/2013 5:10:21</goalLaunchDate>
+    <done>yes</done>
+    <status>Hot</status>
+    <ReleaseManager>Carrie</ReleaseManager>
+    <BuildAndRelease>Jody</BuildAndRelease>
+    <SiteOps>Ken</SiteOps>
+    <QA>Andrew</QA>
+    <timeline>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Wednesday, 12/04/2013 8:10:40</startDate>
+            <endDate>Thursday, 12/05/2013 8:09:23</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>2</step>
+            <startDate>Thursday, 12/05/2013 8:09:23</startDate>
+            <endDate>Friday, 12/06/2013 16:55:10</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>2</step>
+            <startDate>Monday, 12/06/2013 16:55:10</startDate>
+            <endDate>Tuesday, 12/10/2013 10:23:35</endDate>
+            <notes>Well this...</notes>
+        </segment>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>1</step>
+            <startDate>Tuesday, 12/10/2013 10:23:35</startDate>
+            <endDate>Tuesday, 12/10/2013 12:35:18</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>4</step>
+            <startDate>Tuesday, 12/10/2013 12:35:18</startDate>
+            <endDate>Tuesday, 12/10/2013 12:35:22</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>QA</team>
+            <step>1</step>
+            <startDate>Tuesday, 12/10/2013 12:35:22</startDate>
+            <endDate>Tuesday, 12/10/2013 13:44:52</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>3</step>
+            <startDate>Tuesday, 12/10/2013 13:44:52</startDate>
+            <endDate>Tuesday, 12/10/2013 13:47:01</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>3</step>
+            <startDate>Tuesday, 12/10/2013 13:47:01</startDate>
+            <endDate>Wednesday, 12/11/2013 18:19:12</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Wednesday, 12/11/2013 18:19:12</startDate>
+            <endDate>Wednesday, 12/11/2013 18:20:12</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Wednesday, 12/11/2013 18:20:12</startDate>
+            <endDate>Wednesday, 12/11/2013 18:20:44</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Wednesday, 12/11/2013 18:20:44</startDate>
+            <endDate>Wednesday, 12/11/2013 18:21:20</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Wednesday, 12/11/2013 18:21:20</startDate>
+            <endDate>Wednesday, 12/11/2013 18:22:04</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Wednesday, 12/11/2013 18:22:04</startDate>
+            <endDate>Wednesday, 12/11/2013 23:29:58</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>10</step>
+            <startDate>Wednesday, 12/11/2013 23:29:58</startDate>
+            <endDate>N/A</endDate>
+            <notes></notes>
+        </segment>
+    </timeline>
+</xml>
