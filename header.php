@@ -23,3 +23,13 @@ $activePotatoes = getActivePotatoes($potatoes);
 $inactivePotatoes = getInactivePotatoes($potatoes);
 
 ?>
+<html>
+	<head>
+		<title>Potato - Deployment Tracker</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<?php
+		if ($done) {
+			echo '<meta http-equiv="refresh" content="5; URL=index.php" />';
+		}
+		?>
+	</head>

@@ -2,7 +2,7 @@
     <name>Demo Release</name>
     <startDate>Wednesday, 12/11/2013 10:28:28</startDate>
     <goalLaunchDate>Wednesday, 12/11/2013 17:00:00</goalLaunchDate>
-    <done>yes</done>
+    <done>no</done>
     <status>Cold</status>
     <ReleaseManager>carried@angieslist.com</ReleaseManager>
     <BuildAndRelease>balajiv@angieslist.com</BuildAndRelease>

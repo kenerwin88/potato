@@ -36,17 +36,11 @@ $DONE = false;
 
 
 if (isset($_GET['currentPotato'])) {
-		$CurrentPotato = getCurrentPotato($_GET['currentPotato'], $Potatoes);
+		$CurrentPotato = getCurrentPotato($_GET['currentPotato'], $activePotatoes);
 		$TheLastSegment = end(array_values($CurrentPotato->timeLine));
 	}
 	else {$CurrentPotato = false;}
 ?>
-<html>
-	<head>
-		<title>Potato - Deployment Tracker</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<script language="javascript" src="calendar/calendar.js"></script>
-	</head>
 	<body>
 		<div id="wrapper">
 			<header>
@@ -88,7 +82,7 @@ if (isset($_GET['currentPotato'])) {
 					<div class="padding">
 						<h1>Switch Active Potato</h1>
 						<?php
-						foreach ($Potatoes as $Potato) {
+						foreach ($activePotatoes as $Potato) {
 							echo "<h4><a href=\"index.php?currentPotato=".$Potato->name."\">".$Potato->name."</a></h4>";
 						}
 						?>
@@ -102,7 +96,7 @@ if (isset($_GET['currentPotato'])) {
 						<center>
 				    		<form method="post" >
 				    		<div id="pass" >
-				    		<h2>Create Release <img src="potato.png" /></h2>
+				    		<h2>Create Release <img src="images/potato.png" /></h2>
 				    			
 				    			Release Name: <input type="text" name="name"><br/>
 				    			Goal Launch Date: 

@@ -21,5 +21,25 @@
 			$this->QA = (string)$QA;
 			$this->done = (string)$done;
 		}
+
+		function getLastSegment() {
+			$arrayValues = array_values($this->timeLine);
+			return end($arrayValues);
+		}
+
+		function getTeamHolding() {
+			return $this->getLastSegment()->team;
+		}
+
+		function getPersonHolding() {
+			$currentTeam = $this->getTeamHolding();
+			return $this->{$currentTeam};
+		}
+
+		function getPerson($team) {
+			return $this->$team;
+		}
+
+
 	}
 ?>

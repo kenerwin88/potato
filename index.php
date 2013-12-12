@@ -2,28 +2,30 @@
 include 'header.php';
 
 if (isset($_GET['currentPotato'])) {
-		$CurrentPotato = getCurrentPotato($_GET['currentPotato'], $activePotatoes);
-		if (isset($CurrentPotato)) {
-			$arrayValues = array_values($CurrentPotato->timeLine);
+		$SelectedPotato = getCurrentPotato($_GET['currentPotato'], $activePotatoes);
+		if (isset($SelectedPotato)) {
+			$arrayValues = array_values($SelectedPotato->timeLine);
 			$TheLastSegment = end($arrayValues);
 		}
 		else {
 			echo "That release package no longer exists, are you sure it wasn't closed?";
 		}
 	}
-	else {$CurrentPotato = false;}
+	else {$SelectedPotato = false;}
+
+
 ?>
 
 <!-- Determine if in OVERTIME -->
 <?php 
-if ($CurrentPotato) {
-	$totalTime = timeDifference($CurrentPotato->goalLaunchDate, $CurrentPotato->startDate);
-	$t = timeDifference($CurrentPotato->goalLaunchDate, date('l, m/d/Y H:i:s'));
+if ($SelectedPotato) {
+	$totalTime = timeDifference($SelectedPotato->goalLaunchDate, $SelectedPotato->startDate);
+	$t = timeDifference($SelectedPotato->goalLaunchDate, CURRENTDATE);
 	$percent = ($t / $totalTime * 100);
 	$Overtime = FALSE;
 	if ($percent <= 0) {
 		$Overtime = TRUE;
-		$totalTime = timeDifference(date('l, m/d/Y H:i:s'), $CurrentPotato->startDate);
+		$totalTime = timeDifference(CURRENTDATE, $SelectedPotato->startDate);
 	}
 }
 ?>
@@ -33,18 +35,18 @@ if ($CurrentPotato) {
 <?php
 $PERCENTEXCESS = 0;
 if (!empty($_POST['submit'])) {
-	$TheLastSegment = end(array_values($CurrentPotato->timeLine));
-	$TheLastSegment->endDate = date('l, m/d/Y H:i:s');
-	$SegmentObj = new Segment($_POST['Team'],$_POST['Step'],date('l, m/d/Y H:i:s'),'N/A', $_POST['notes']);
+	$TheLastSegment = $SelectedPotato->getLastSegment();
+	$TheLastSegment->endDate = CURRENTDATE;
+	$SegmentObj = new Segment($_POST['Team'],$_POST['Step'],CURRENTDATE,'N/A', $_POST['notes']);
 	$CurrentTeam = $_POST['Team'];
-	$CurrentPotato->timeLine[] = $SegmentObj;
+	$SelectedPotato->timeLine[] = $SegmentObj;
 	$Holder = "N/A";
-	if ($CurrentTeam=="ReleaseManager") {$Holder = $CurrentPotato->ReleaseManager;}
-	if ($CurrentTeam=="SiteOps") {$Holder = $CurrentPotato->SiteOps;}
-	if ($CurrentTeam=="BuildAndRelease") {$Holder = $CurrentPotato->BuildAndRelease;}
-	if ($CurrentTeam=="QA") {$Holder = $CurrentPotato->QA;}
+	if ($CurrentTeam=="ReleaseManager") {$Holder = $SelectedPotato->ReleaseManager;}
+	if ($CurrentTeam=="SiteOps") {$Holder = $SelectedPotato->SiteOps;}
+	if ($CurrentTeam=="BuildAndRelease") {$Holder = $SelectedPotato->BuildAndRelease;}
+	if ($CurrentTeam=="QA") {$Holder = $SelectedPotato->QA;}
 
-	potatomail($CurrentPotato->name, $Holder, $_POST['Step'], $CurrentPotato->SiteOps, $_POST['notes']);
+	potatomail($SelectedPotato->name, $Holder, $_POST['Step'], $SelectedPotato->SiteOps, $_POST['notes']);
 
 	if ($_POST['Step']=="10") {
 		$done=TRUE;
@@ -52,16 +54,6 @@ if (!empty($_POST['submit'])) {
 }
 
 ?>
-<html>
-	<head>
-		<title>Potato - Deployment Tracker</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<?php
-		if ($done) {
-			echo '<meta http-equiv="refresh" content="5; URL=index.php" />';
-		}
-		?>
-	</head>
 	<body>
 		<div id="wrapper">
 			<header>
@@ -73,18 +65,18 @@ if (!empty($_POST['submit'])) {
 					<a href="index.php"><img src="images/character.png" /></a>
 					<h1>
 						<?php
-						if ($CurrentPotato) {
+						if ($SelectedPotato) {
 							if ($Overtime) {
 								echo '<span style="color: red;">';
-								echo $CurrentPotato->name;
-								echo '<h6>Start Date: ',$CurrentPotato->startDate,'</h6>';
-								echo '<h6>Goal Date: ',$CurrentPotato->goalLaunchDate,'</h6>';
+								echo $SelectedPotato->name;
+								echo '<h6>Start Date: ',$SelectedPotato->startDate,'</h6>';
+								echo '<h6>Goal Date: ',$SelectedPotato->goalLaunchDate,'</h6>';
 								echo '</span>';
 							}
 							else {
-								echo $CurrentPotato->name;
-								echo '<h6>Start Date: ',$CurrentPotato->startDate,'</h6>';
-								echo '<h6>Goal Date: ',$CurrentPotato->goalLaunchDate,'</h6>';
+								echo $SelectedPotato->name;
+								echo '<h6>Start Date: ',$SelectedPotato->startDate,'</h6>';
+								echo '<h6>Goal Date: ',$SelectedPotato->goalLaunchDate,'</h6>';
 							}
 							
 						}
@@ -98,10 +90,10 @@ if (!empty($_POST['submit'])) {
 					
 				</div>
 				<div id="Team">
-					<h6 style="color: #f1a165;">Build &amp; Release: jodyt@angieslist.com</h6>
-					<h6 style="color: #2e52b8;">SiteOps: kener@angieslist.com</h6>
-					<h6 style="color: #2da84a;">Release Manager: carrie@angieslist.com</h6>
-					<h6 style="color: #b82ea0;">QA: andreww@angieslist.com</h6>
+					<h6 style="color: #f1a165;">Build &amp; Release: <?php echo $SelectedPotato->getPerson('BuildAndRelease') ?></h6>
+					<h6 style="color: #2e52b8;">SiteOps: <?php echo $SelectedPotato->getPerson('SiteOps') ?></h6>
+					<h6 style="color: #2da84a;">Release Manager: <?php echo $SelectedPotato->getPerson('ReleaseManager') ?></h6>
+					<h6 style="color: #b82ea0;">QA: <?php echo $SelectedPotato->getPerson('QA') ?></h6>
 				</div>
 			</div>
 			<div id="content">
@@ -126,8 +118,8 @@ if (!empty($_POST['submit'])) {
 						<!-- The METER -->
 			    		<div class="meter">
 			    		<?php
-			    		if ($CurrentPotato) {
-			    		foreach ($CurrentPotato->timeLine as $Segment) {
+			    		if ($SelectedPotato) {
+			    		foreach ($SelectedPotato->timeLine as $Segment) {
 			    			$color = 'blue';
 			    			if ($Segment->team == "ReleaseManager") {
 			    				$color = 'green';
@@ -157,7 +149,7 @@ if (!empty($_POST['submit'])) {
 			    					$percentWidth = round($timePassed / $totalTime * 98, 2)."%";
 			    				}
 			    				
-			    				if ($Segment === reset($CurrentPotato->timeLine)) {
+			    				if ($Segment === reset($SelectedPotato->timeLine)) {
 			    					echo "<span class=\"".$color." first\" style=\"width: ".$percentWidth."; display: inline-block;\"><center style=\"color: #fff\">".$shortName." - ".$percent."</center></span>";
 			    				}
 
@@ -166,7 +158,7 @@ if (!empty($_POST['submit'])) {
 			    				}
 			    			}
 			    			else {
-			    				$timePassed = timeDifference(date('l, m/d/Y H:i:s'),$Segment->startDate);
+			    				$timePassed = timeDifference(CURRENTDATE,$Segment->startDate);
 			    				$percent = round($timePassed / $totalTime * 100, 2)."%";
 			    				$pWidth = round($timePassed / $totalTime * 99, 2);
 			    				if ($pWidth < 0.5) {
@@ -176,7 +168,7 @@ if (!empty($_POST['submit'])) {
 			    				else {
 			    					$percentWidth = round($timePassed / $totalTime * 98, 2)."%";
 			    				}
-			    				if ($Segment === reset($CurrentPotato->timeLine)) {
+			    				if ($Segment === reset($SelectedPotato->timeLine)) {
 			    					echo "<span class=\"".$color." first\" style=\"width: ".$percentWidth."; display: inline-block;\"><center style=\"color: #fff\">".$shortName." - ".$percent."</center></span>";
 			    				}
 			    				
@@ -185,9 +177,9 @@ if (!empty($_POST['submit'])) {
 			    				}
 			    			}
 			    		}
-			    		$t = timeDifference($CurrentPotato->goalLaunchDate, date('l, m/d/Y H:i:s'));
-			    		if ($CurrentPotato->done=='yes') {
-			    			$t = timeDifference($CurrentPotato->goalLaunchDate, $TheLastSegment->endDate);
+			    		$t = timeDifference($SelectedPotato->goalLaunchDate, CURRENTDATE);
+			    		if ($SelectedPotato->done=='yes') {
+			    			$t = timeDifference($SelectedPotato->goalLaunchDate, $TheLastSegment->endDate);
 			    		}
 			    		$percent = round($t / $totalTime * 100, 2)."%";
 			    		$percentWidth = round(($t / $totalTime * 99)-$PERCENTEXCESS, 2)."%"; // This is so that the width doesn't accidently go over... ignore
@@ -202,17 +194,10 @@ if (!empty($_POST['submit'])) {
 			    		</div>
 			    		<!-- END METER -->
 			    		
-						<p>Currently held by: <b>
-							<?php 
-				    		if ($TheLastSegment->team == 'ReleaseManager') {echo $CurrentPotato->ReleaseManager." - ReleaseManager";} 
-				    		if ($TheLastSegment->team == 'BuildAndRelease') {echo $CurrentPotato->BuildAndRelease." - Build&amp;Release";} 
-				    		if ($TheLastSegment->team == 'SiteOps') {echo $CurrentPotato->SiteOps." - SiteOps";} 
-				    		if ($TheLastSegment->team == 'QA') {echo $CurrentPotato->QA." - QA";} 
-				    		?>
-				    		</b><br/>
-				    		Held for: <b><?php 
+						<p>Currently held by: <b><?php echo $SelectedPotato->getPersonHolding() . " - " . $SelectedPotato->getTeamHolding(); ?></b></p>
+						<p>Held for: <b><?php 
 				    		
-				    		$timePassed = timeDifference($TheLastSegment->startDate, date('1, m/d/Y H:i:s'));
+				    		$timePassed = timeDifference($TheLastSegment->startDate, CURRENTDATE);
 				    		
 				    		echo secondsToTime($timePassed);
 				    		?></b>
@@ -225,47 +210,14 @@ if (!empty($_POST['submit'])) {
 				    			echo "<span style=\"color: red;\">LATE!</span>";
 				    		}
 				    		else {
-				    			echo secondsToTime(timeDifference($CurrentPotato->goalLaunchDate, date('1, m/d/Y H:i:s')));
+				    			echo secondsToTime(timeDifference($SelectedPotato->goalLaunchDate, date('1, m/d/Y H:i:s')));
 				    		}
 				    		?>
 				    		</b>
-				    		<?php
-				    		/*
-				    		foreach ($CurrentPotato->timeLine as $Segment) {
-				    			echo "<br/>";
-				    			if ($Segment->endDate !== "N/A") {
-					    			echo secondsToTime(timeDifference($Segment->endDate, $Segment->startDate));
-					    			$timePassed = timeDifference($Segment->endDate, $Segment->startDate);
-					    			
-					    			echo "Percentage of Total Time: ";
-				    				echo round($timePassed / $totalTime * 100, 2)."%";
-				    				echo "<br/>";
-				    			}
-				    			else {
-
-				    				$timePassed = timeDifference(date('l, m/d/Y H:i:s'),$Segment->startDate);
-				    				echo secondsToTime($timePassed);
-				    				echo "<br/>Total TIME: ".$totalTime."<br/>";
-				    				echo "<br/>Seconds for last segment total: ".$timePassed."<br/>";
-
-				    				echo "Percentage of Total Time: ";
-				    				echo round($timePassed / $totalTime * 100, 2)."%";
-
-				    			}
-				    		}
-				    		echo "<br/>From now to launch date: ";
-				    		echo $t = timeDifference($Potato->goalLaunchDate, date('l, m/d/Y H:i:s'));
-				    		echo $t."<br/>";
-				    		echo "<br/><br/>";
-				    		echo round($t / $totalTime * 100, 2);
-				    		echo "%<br/>";
-				    		echo secondsToTime($t);
-				    		*/
-				    		?>
 				    		<center>
 				    		<form method="post">
 				    		<div id="pass" style="border:2px dotted; border-radius:25px; width: 300px; padding: 10px;">
-				    		<h2>Pass <?php echo $CurrentPotato->name ?> <img src="potato.png" /></h2>
+				    		<h2>Pass <?php echo $SelectedPotato->name ?> <img src="images/potato.png" /></h2>
 				    			Select Team: <br/>
 								<select name="Team">
 								 	<option value="ReleaseManager">Release Manager</option>
@@ -298,32 +250,32 @@ if (!empty($_POST['submit'])) {
 				    		</center>
 				    		
 							<?php
-							$CurrentPotatoFileName = "potatoes/potato-".$CurrentPotato->name.".xml";
-							$donePotatoFileName = "potatoes/potato-".$CurrentPotato->name."-DONE.xml";
+							$SelectedPotatoFileName = "potatoes/potato-".$SelectedPotato->name.".xml";
+							$donePotatoFileName = "potatoes/potato-".$SelectedPotato->name."-DONE.xml";
 							if ($done) {
 							   	sleep(1);
-							   	rename($CurrentPotatoFileName, $donePotatoFileName);
+							   	rename($SelectedPotatoFileName, $donePotatoFileName);
 				    			echo "THIS RELEASE HAS BEEN COMPLETED, REDIRECTING TO MAIN INDEX in 5 SECONDS!";
-				    			$CurrentPotatoFileName = $donePotatoFileName;
+				    			$SelectedPotatoFileName = $donePotatoFileName;
 				    		}
 							
 							   $writer = new XMLWriter();  
-							   $writer->openURI($CurrentPotatoFileName);   
+							   $writer->openURI($SelectedPotatoFileName);   
 							   $writer->setIndent(true);
 							   $writer->setIndentString("    ");
 							   $writer->startElement('xml');  
-						       $writer->writeElement('name', $CurrentPotato->name);  
-						       $writer->writeElement('startDate', $CurrentPotato->startDate);
-						       $writer->writeElement('goalLaunchDate', $CurrentPotato->goalLaunchDate);
+						       $writer->writeElement('name', $SelectedPotato->name);  
+						       $writer->writeElement('startDate', $SelectedPotato->startDate);
+						       $writer->writeElement('goalLaunchDate', $SelectedPotato->goalLaunchDate);
 						       if ($done) {$writer->writeElement('done', 'yes');}
-						       else {$writer->writeElement('done', $CurrentPotato->done);}
-						       $writer->writeElement('status', $CurrentPotato->status);
-						       $writer->writeElement('ReleaseManager', $CurrentPotato->ReleaseManager);
-						       $writer->writeElement('BuildAndRelease', $CurrentPotato->BuildAndRelease);
-						       $writer->writeElement('SiteOps', $CurrentPotato->SiteOps);
-						       $writer->writeElement('QA', $CurrentPotato->QA);
+						       else {$writer->writeElement('done', $SelectedPotato->done);}
+						       $writer->writeElement('status', $SelectedPotato->status);
+						       $writer->writeElement('ReleaseManager', $SelectedPotato->ReleaseManager);
+						       $writer->writeElement('BuildAndRelease', $SelectedPotato->BuildAndRelease);
+						       $writer->writeElement('SiteOps', $SelectedPotato->SiteOps);
+						       $writer->writeElement('QA', $SelectedPotato->QA);
 						           $writer->startElement('timeline');
-						           foreach ($CurrentPotato->timeLine as $Segment) {
+						           foreach ($SelectedPotato->timeLine as $Segment) {
 						           	$writer->startElement('segment');
 							           	$writer->writeElement('team', $Segment->team);
 							           	$writer->writeElement('step', $Segment->step);
