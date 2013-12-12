@@ -47,6 +47,14 @@ function getInactivePotatoes($potatoes) {
 	return $activePotatoes;
 }
 
+
+function getSelectedPotato($activePotatoes) {
+	if (isset($_GET['selectedPotato'])) {
+		return getCurrentPotato($_GET['selectedPotato'], $activePotatoes);
+	}
+	else {return false;}
+}
+
 function loadSteps( $xml ) {
 
 	$stepXML = simplexml_load_file( $xml );
