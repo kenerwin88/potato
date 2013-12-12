@@ -42,10 +42,10 @@ if (!empty($_POST['submit'])) {
 	if ($CurrentTeam=="BuildAndRelease") {$Holder = $selectedPotato->BuildAndRelease;}
 	if ($CurrentTeam=="QA") {$Holder = $selectedPotato->QA;}
 
-	generateEmail($selectedPotato->name, $Holder, $_POST['Step'], $selectedPotato->SiteOps, $_POST['notes']);
+	generateEmail($selectedPotato, ("Step-".$_POST['Step']), 'kener@angieslist.com');
 
 	if ($_POST['Step']=="10") {
-		$done=TRUE;
+		$selectedPotato->done = TRUE;
 	}
 	savePotato($selectedPotato);
 }

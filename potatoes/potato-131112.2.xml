@@ -55,6 +55,20 @@
             <team>ReleaseManager</team>
             <step>6</step>
             <startDate>Thursday, 12/12/2013 11:41:17</startDate>
+            <endDate>Thursday, 12/12/2013 12:01:59</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>QA</team>
+            <step>1</step>
+            <startDate>Thursday, 12/12/2013 12:01:59</startDate>
+            <endDate>Thursday, 12/12/2013 12:02:16</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>QA</team>
+            <step>1</step>
+            <startDate>Thursday, 12/12/2013 12:02:16</startDate>
             <endDate>N/A</endDate>
             <notes></notes>
         </segment>

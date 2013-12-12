@@ -30,6 +30,7 @@ function getPotatoes() {
 }
 
 function getActivePotatoes($potatoes) {
+	$activePotatoes = array();
 	foreach ( $potatoes as $potato ) {
 		if ( $potato->done == "no" ) {
 			$activePotatoes[] = $potato;
@@ -39,12 +40,13 @@ function getActivePotatoes($potatoes) {
 }
 
 function getInactivePotatoes($potatoes) {
+	$inactivePotatoes = array();
 	foreach ( $potatoes as $potato ) {
 		if ( $potato->done == "yes" ) {
-			$activePotatoes[] = $potato;
+			$inactivePotatoes[] = $potato;
 		}
 	}
-	return $activePotatoes;
+	return $inactivePotatoes;
 }
 
 
@@ -84,16 +86,19 @@ function getFullDescription($number) {
 	else if ($number == "10") {return '10. DONE';}
 }
 
-function generateEmail($releaseName, $holder, $step, $to, $notes) {
-	$message = file_get_contents("templates/1.html");
-	$message = str_replace("%PERSONHOLDING%", "BAARRR!", $message);
-	$XML = simplexml_load_file("templates/".$step.".xml");
+function generateEmail($potato, $template, $to) {
+	$message = file_get_contents("templates/".$template.".html");
+	$XML = simplexml_load_file("templates/".$template.".html");
+	$subject = (string)$XML->head->title;
+	
+	$message = populateData( $potato, $message );
+	$subject = populateData( $potato, $subject );
 
 	$smtpserver = 'alemail.angieslist.com';
 	$port = 25;
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-	$subject = $releaseName." PASSED TO ".$holder." : Current Step - ".$step;
+
 	// Additional headers
 	$headers .= 'To: ' . $to . "\r\n";
 	$headers .= 'From: Release Notifier <noreply@angieslist.com.com>' . "\r\n";
@@ -104,6 +109,15 @@ function generateEmail($releaseName, $holder, $step, $to, $notes) {
 	$wordwrappedmessage = wordwrap($message, 70);
 	$success = mail($to, $subject, $wordwrappedmessage, $headers);
 
+}
+
+// Populates string with information from Potato
+function populateData( $potato, $string ) {
+	$string = str_replace("%RELEASENAME%", $potato->name, $string);
+	$string = str_replace("%TEAMHOLDING%", $potato->getTeamHolding(), $string);
+	$string = str_replace("%PERSONHOLDING%", $potato->getPersonHolding(), $string);
+	$string = str_replace("%NOTES%", $potato->getLastSegment()->notes, $string);
+	return $string;
 }
 
 function getStep($step) {
@@ -168,7 +182,7 @@ function secondsToTime($seconds) {
 function savePotato($potato) {
 	$selectedPotatoFileName = "potatoes/potato-".$potato->name.".xml";
 	$donePotatoFileName = "potatoes/potato-".$potato->name."-DONE.xml";
-	if ($done) {
+	if ($potato->done=="yes") {
 	   	rename($selectedPotatoFileName, $donePotatoFileName);
 		echo "THIS RELEASE HAS BEEN COMPLETED, REDIRECTING TO MAIN INDEX in 5 SECONDS!";
 		$selectedPotatoFileName = $donePotatoFileName;
@@ -181,7 +195,7 @@ function savePotato($potato) {
    $writer->writeElement('name', $potato->name);  
    $writer->writeElement('startDate', $potato->startDate);
    $writer->writeElement('goalLaunchDate', $potato->goalLaunchDate);
-   if ($done) {$writer->writeElement('done', 'yes');}
+   if ($potato->done=="yes") {$writer->writeElement('done', 'yes');}
    else {$writer->writeElement('done', $potato->done);}
    $writer->writeElement('status', $potato->status);
    $writer->writeElement('ReleaseManager', $potato->ReleaseManager);
