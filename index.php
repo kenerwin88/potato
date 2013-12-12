@@ -24,32 +24,9 @@ if ($selectedPotato) {
 		$totalTime = timeDifference(CURRENTDATE, $selectedPotato->startDate);
 	}
 }
-?>
-<!-- END OVERTIME Code -->
 
-
-<?php
-$PERCENTEXCESS = 0;
-if (!empty($_POST['submit'])) {
-	$TheLastSegment = $selectedPotato->getLastSegment();
-	$TheLastSegment->endDate = CURRENTDATE;
-	$SegmentObj = new Segment($_POST['Team'],$_POST['Step'],CURRENTDATE,'N/A', $_POST['notes']);
-	$CurrentTeam = $_POST['Team'];
-	$selectedPotato->timeLine[] = $SegmentObj;
-	$Holder = "N/A";
-	if ($CurrentTeam=="ReleaseManager") {$Holder = $selectedPotato->ReleaseManager;}
-	if ($CurrentTeam=="SiteOps") {$Holder = $selectedPotato->SiteOps;}
-	if ($CurrentTeam=="BuildAndRelease") {$Holder = $selectedPotato->BuildAndRelease;}
-	if ($CurrentTeam=="QA") {$Holder = $selectedPotato->QA;}
-
-	generateEmail($selectedPotato, ("Step-".$_POST['Step']), 'kener@angieslist.com');
-
-	if ($_POST['Step']=="10") {
-		$selectedPotato->done = TRUE;
-	}
-	savePotato($selectedPotato);
-}
-
+$PERCENTEXCESS = 0; # This variable needs to go away, it currently sorta determines the width of things.
+$selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any POST variables.
 ?>
 	<body>
 		<div id="wrapper">
@@ -251,22 +228,8 @@ if (!empty($_POST['submit'])) {
 				    		</div>
 				    		</form>
 				    		</center>
-				    		
-							<?php
 
-							
-							   
-							?>
-
-				    		<?php
-				    		
-				    		}
-
-				    		else {
-				    			echo "Please select a release!";
-				    		}
-				    		?>
-
+				    		<?php } else {echo "Please select a release!";} ?>
 						</p>
 					</div>
 				</div>

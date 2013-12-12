@@ -218,4 +218,23 @@ function savePotato($potato) {
    $writer->flush(); 
 }
 
+function processPOST( $POST, $selectedPotato ) {
+	if (!empty($POST['submit'])) {
+		$TheLastSegment = $selectedPotato->getLastSegment();
+		$TheLastSegment->endDate = CURRENTDATE;
+		$SegmentObj = new Segment($POST['Team'],$POST['Step'],CURRENTDATE,'N/A', $POST['notes']);
+		$CurrentTeam = $_POST['Team'];
+		$selectedPotato->timeLine[] = $SegmentObj;
+
+		generateEmail($selectedPotato, ("Step-".$POST['Step']), 'kener@angieslist.com');
+
+		# If Potato on last step, complete it!
+		if ($POST['Step']=="10") {$selectedPotato->done = TRUE;}
+		
+		# Save Potato
+		savePotato($selectedPotato);
+	}
+	return $selectedPotato;
+}
+
 ?>

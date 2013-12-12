@@ -13,8 +13,22 @@
             <team>BuildAndRelease</team>
             <step>1</step>
             <startDate>Thursday, 12/12/2013 15:59:05</startDate>
-            <endDate>N/A</endDate>
+            <endDate>Thursday, 12/12/2013 16:11:57</endDate>
             <notes>Package Created</notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>2</step>
+            <startDate>Thursday, 12/12/2013 16:11:57</startDate>
+            <endDate>Thursday, 12/12/2013 16:12:46</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>QA</team>
+            <step>2</step>
+            <startDate>Thursday, 12/12/2013 16:12:46</startDate>
+            <endDate>N/A</endDate>
+            <notes></notes>
         </segment>
     </timeline>
 </xml>
