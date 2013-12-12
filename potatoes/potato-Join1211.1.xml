@@ -1,8 +1,8 @@
 <xml>
-    <name>Demo Release</name>
+    <name>Join1211.1</name>
     <startDate>Wednesday, 12/11/2013 10:28:28</startDate>
     <goalLaunchDate>Wednesday, 12/11/2013 17:00:00</goalLaunchDate>
-    <done>yes</done>
+    <done>no</done>
     <status>Cold</status>
     <ReleaseManager>carried@angieslist.com</ReleaseManager>
     <BuildAndRelease>balajiv@angieslist.com</BuildAndRelease>
@@ -55,7 +55,14 @@
             <team>ReleaseManager</team>
             <step>10</step>
             <startDate>Wednesday, 12/11/2013 14:26:33</startDate>
-            <endDate>Wednesday, 12/11/2013 14:27:33</endDate>
+            <endDate>Thursday, 12/12/2013 11:57:35</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>T</step>
+            <startDate>Thursday, 12/12/2013 11:57:35</startDate>
+            <endDate>N/A</endDate>
             <notes></notes>
         </segment>
     </timeline>

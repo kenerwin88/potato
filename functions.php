@@ -84,111 +84,12 @@ function getFullDescription($number) {
 	else if ($number == "10") {return '10. DONE';}
 }
 
-function generateMessage($releaseName, $holder, $step, $to, $notes) { 
-	$NeededSteps = '';
-	$NextInLine = '';
-
-	if ($step=="1") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="2") {
-		$NeededSteps = '2. Pull everything from Git, create package on...';
-		$NextInLine = 'ReleaseManager';
-	}
-	if ($step=="P") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="3") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="4") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="5") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="6") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="T") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="7") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="8") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="9") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'QA';
-	}
-	if ($step=="10") {
-		$NeededSteps = '1. Deploy the package to the Stage Environments.<br/>
-		2. Restart IIS on each Stage server.<br/>
-		3. Smoke test the environments.<br/>';
-		$NextInLine = 'Done!';
-	}
+function generateEmail($releaseName, $holder, $step, $to, $notes) {
+	$message = file_get_contents("templates/1.html");
+	$message = str_replace("%PERSONHOLDING%", "BAARRR!", $message);
 	$XML = simplexml_load_file("templates/".$step.".xml");
-	$NeededSteps = '';
-	print_r($XML);
-	$i = 0;
-	foreach ($XML->steps->step as $step) {
-		$i++;
-		$NeededSteps .= $i.". ".$step."<br/>";
-	}
-	return '
-	<html>
-	<head>
-		<title>Release Has Been Passed</title>
-	</head>
-	<body>
-		<h1>Release: ' . $releaseName . '</h1>
-		<p>Passed to: '. $holder .'<br/>
-		Current Step: <b>'.getFullDescription($step) .'</b><br/>
-		</p>
-		<p><i><b>What needs to be done before passing:</b></i><br/>
-		' . $NeededSteps . '
-		<br/>
-		<b><i>When finished, pass to ' . $NextInLine . '</i></b><br/><br/>
-		Notes from Passer: ' . $notes . '
-		</p>
-	</body>
-	</html>
-	';
-}
 
-function potatomail($releaseName, $holder, $step, $to, $notes) {
-    $smtpserver = 'alemail.angieslist.com';
+	$smtpserver = 'alemail.angieslist.com';
 	$port = 25;
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
@@ -199,9 +100,10 @@ function potatomail($releaseName, $holder, $step, $to, $notes) {
 
 	ini_set('SMTP', $smtpserver);
 	ini_set('smtp_port', $port);
-	$message = generateMessage($releaseName, $holder, $step, $to, $notes);
+
 	$wordwrappedmessage = wordwrap($message, 70);
 	$success = mail($to, $subject, $wordwrappedmessage, $headers);
+
 }
 
 function getStep($step) {
@@ -261,6 +163,45 @@ function secondsToTime($seconds) {
     $dtT = clone $dtF;
     $dtT->modify("+$seconds seconds");
     return $dtF->diff($dtT)->format('%a days, %h hours, %i minutes and %s seconds');
+}
+
+function savePotato($potato) {
+	$selectedPotatoFileName = "potatoes/potato-".$potato->name.".xml";
+	$donePotatoFileName = "potatoes/potato-".$potato->name."-DONE.xml";
+	if ($done) {
+	   	rename($selectedPotatoFileName, $donePotatoFileName);
+		echo "THIS RELEASE HAS BEEN COMPLETED, REDIRECTING TO MAIN INDEX in 5 SECONDS!";
+		$selectedPotatoFileName = $donePotatoFileName;
+	}
+   $writer = new XMLWriter();  
+   $writer->openURI($selectedPotatoFileName);   
+   $writer->setIndent(true);
+   $writer->setIndentString("    ");
+   $writer->startElement('xml');  
+   $writer->writeElement('name', $potato->name);  
+   $writer->writeElement('startDate', $potato->startDate);
+   $writer->writeElement('goalLaunchDate', $potato->goalLaunchDate);
+   if ($done) {$writer->writeElement('done', 'yes');}
+   else {$writer->writeElement('done', $potato->done);}
+   $writer->writeElement('status', $potato->status);
+   $writer->writeElement('ReleaseManager', $potato->ReleaseManager);
+   $writer->writeElement('BuildAndRelease', $potato->BuildAndRelease);
+   $writer->writeElement('SiteOps', $potato->SiteOps);
+   $writer->writeElement('QA', $potato->QA);
+       $writer->startElement('timeline');
+       foreach ($potato->timeLine as $Segment) {
+       	$writer->startElement('segment');
+           	$writer->writeElement('team', $Segment->team);
+           	$writer->writeElement('step', $Segment->step);
+           	$writer->writeElement('startDate', $Segment->startDate);
+           	$writer->writeElement('endDate', $Segment->endDate);
+           	$writer->writeElement('notes', $Segment->notes);
+       	$writer->endElement();
+       }
+       $writer->endElement();
+   $writer->endElement();
+   $writer->endDocument();   
+   $writer->flush(); 
 }
 
 ?>

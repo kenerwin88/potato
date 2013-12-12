@@ -40,6 +40,24 @@
 			return $this->$team;
 		}
 
+		// Returns time in seconds from start date to goal launch date
+		function getSecondsFromStartToLaunch() {
+			return timeDifference( $this->goalLaunchDate, $this->startDate );
+		}
 
+		// Returns time in seconds from start date to now
+		function getSecondsFromStartToNow() {
+			return timeDifference( CURRENTDATE, $this->startDate );
+		}
+
+		// Returns time in human readable format from start date to goal launch date
+		function getTimeFromStartToLaunch() {
+			return secondsToTime($this->getSecondsFromStartToLaunch());
+		}
+
+		// Returns time in human readable format from start date to NOW
+		function getTimeFromStartToNow() {
+			return secondsToTime($this->getSecondsFromStartToNow());
+		}
 	}
 ?>

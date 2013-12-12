@@ -1,0 +1,34 @@
+<xml>
+    <name>131218IN</name>
+    <startDate>Wednesday, 12/11/2013 14:33:05</startDate>
+    <goalLaunchDate>Thursday, 12/19/2013 00:00:00</goalLaunchDate>
+    <done>no</done>
+    <status>Cold</status>
+    <ReleaseManager>carried@angieslist.com</ReleaseManager>
+    <BuildAndRelease>balajiv@angieslist.com</BuildAndRelease>
+    <SiteOps>kener@angieslist.com</SiteOps>
+    <QA>andreww@angieslist.com</QA>
+    <timeline>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>2</step>
+            <startDate>Wednesday, 12/11/2013 14:33:05</startDate>
+            <endDate>Wednesday, 12/11/2013 20:02:10</endDate>
+            <notes>Package Created</notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>1</step>
+            <startDate>Wednesday, 12/11/2013 20:02:10</startDate>
+            <endDate>Thursday, 12/12/2013 09:18:19</endDate>
+            <notes>8:02PM 131218IN.10 - BUILD SUCCESS!</notes>
+        </segment>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>2</step>
+            <startDate>Thursday, 12/12/2013 09:18:19</startDate>
+            <endDate>N/A</endDate>
+            <notes>Needs to be rebuilt</notes>
+        </segment>
+    </timeline>
+</xml>

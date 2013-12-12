@@ -42,11 +42,12 @@ if (!empty($_POST['submit'])) {
 	if ($CurrentTeam=="BuildAndRelease") {$Holder = $selectedPotato->BuildAndRelease;}
 	if ($CurrentTeam=="QA") {$Holder = $selectedPotato->QA;}
 
-	potatomail($selectedPotato->name, $Holder, $_POST['Step'], $selectedPotato->SiteOps, $_POST['notes']);
+	generateEmail($selectedPotato->name, $Holder, $_POST['Step'], $selectedPotato->SiteOps, $_POST['notes']);
 
 	if ($_POST['Step']=="10") {
 		$done=TRUE;
 	}
+	savePotato($selectedPotato);
 }
 
 ?>
@@ -85,12 +86,14 @@ if (!empty($_POST['submit'])) {
 					</h1>
 					
 				</div>
+				<?php if ($selectedPotato) { ?>
 				<div id="Team">
 					<h6 style="color: #f1a165;">Build &amp; Release: <?php echo $selectedPotato->getPerson('BuildAndRelease') ?></h6>
 					<h6 style="color: #2e52b8;">SiteOps: <?php echo $selectedPotato->getPerson('SiteOps') ?></h6>
 					<h6 style="color: #2da84a;">Release Manager: <?php echo $selectedPotato->getPerson('ReleaseManager') ?></h6>
 					<h6 style="color: #b82ea0;">QA: <?php echo $selectedPotato->getPerson('QA') ?></h6>
 				</div>
+				<?php } ?>
 			</div>
 			<div id="content">
 				<div id="navigation">
@@ -199,8 +202,12 @@ if (!empty($_POST['submit'])) {
 				    		?></b>
 				    		<br/>
 				    		<?php
-				    		echo 'Current Step: <b>',getStep($selectedPotato->getLastSegment()->step)."</b>";
-
+				    		echo 'Current Step: <b>',getStep($selectedPotato->getLastSegment()->step).'</b>';
+				    		echo '<br/>Seconds from Start Date to Launch Date: <b>' . $selectedPotato->getSecondsFromStartToLaunch().'</b>';
+				    		echo '<br/>Time from Start Date to Launch Date: <b>' . $selectedPotato->getTimeFromStartToLaunch().'</b>';
+				    		echo '<br/>Seconds from Start Date to Now: <b>' . $selectedPotato->getSecondsFromStartToNow().'</b>';
+				    		echo '<br/>Time from Start Date to Now: <b>' . $selectedPotato->getTimeFromStartToNow().'</b>';
+				    		
 				    		echo '<br/>Time until launch: <b>';
 				    		if ($Overtime) {
 				    			echo "<span style=\"color: red;\">LATE!</span>";
@@ -246,44 +253,8 @@ if (!empty($_POST['submit'])) {
 				    		</center>
 				    		
 							<?php
-							$selectedPotatoFileName = "potatoes/potato-".$selectedPotato->name.".xml";
-							$donePotatoFileName = "potatoes/potato-".$selectedPotato->name."-DONE.xml";
-							if ($done) {
-							   	sleep(1);
-							   	rename($selectedPotatoFileName, $donePotatoFileName);
-				    			echo "THIS RELEASE HAS BEEN COMPLETED, REDIRECTING TO MAIN INDEX in 5 SECONDS!";
-				    			$selectedPotatoFileName = $donePotatoFileName;
-				    		}
+
 							
-							   $writer = new XMLWriter();  
-							   $writer->openURI($selectedPotatoFileName);   
-							   $writer->setIndent(true);
-							   $writer->setIndentString("    ");
-							   $writer->startElement('xml');  
-						       $writer->writeElement('name', $selectedPotato->name);  
-						       $writer->writeElement('startDate', $selectedPotato->startDate);
-						       $writer->writeElement('goalLaunchDate', $selectedPotato->goalLaunchDate);
-						       if ($done) {$writer->writeElement('done', 'yes');}
-						       else {$writer->writeElement('done', $selectedPotato->done);}
-						       $writer->writeElement('status', $selectedPotato->status);
-						       $writer->writeElement('ReleaseManager', $selectedPotato->ReleaseManager);
-						       $writer->writeElement('BuildAndRelease', $selectedPotato->BuildAndRelease);
-						       $writer->writeElement('SiteOps', $selectedPotato->SiteOps);
-						       $writer->writeElement('QA', $selectedPotato->QA);
-						           $writer->startElement('timeline');
-						           foreach ($selectedPotato->timeLine as $Segment) {
-						           	$writer->startElement('segment');
-							           	$writer->writeElement('team', $Segment->team);
-							           	$writer->writeElement('step', $Segment->step);
-							           	$writer->writeElement('startDate', $Segment->startDate);
-							           	$writer->writeElement('endDate', $Segment->endDate);
-							           	$writer->writeElement('notes', $Segment->notes);
-						           	$writer->endElement();
-						           }
-						           $writer->endElement();
-						       $writer->endElement();
-							   $writer->endDocument();   
-							   $writer->flush(); 
 							   
 							?>
 

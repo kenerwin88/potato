@@ -2,7 +2,7 @@
     <name>131112.2</name>
     <startDate>Thursday, 12/05/2013 4:10:40</startDate>
     <goalLaunchDate>Monday, 12/13/2013 5:10:21</goalLaunchDate>
-    <done>yes</done>
+    <done>no</done>
     <status>Hot</status>
     <ReleaseManager>Carrie</ReleaseManager>
     <BuildAndRelease>Balaji</BuildAndRelease>
@@ -41,13 +41,20 @@
             <team>ReleaseManager</team>
             <step>10</step>
             <startDate>Wednesday, 12/11/2013 12:40:09</startDate>
-            <endDate>Wednesday, 12/11/2013 23:29:34</endDate>
+            <endDate>Thursday, 12/12/2013 11:40:39</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>1</step>
+            <startDate>Thursday, 12/12/2013 11:40:39</startDate>
+            <endDate>Thursday, 12/12/2013 11:41:17</endDate>
             <notes></notes>
         </segment>
         <segment>
             <team>ReleaseManager</team>
-            <step>10</step>
-            <startDate>Wednesday, 12/11/2013 23:29:34</startDate>
+            <step>6</step>
+            <startDate>Thursday, 12/12/2013 11:41:17</startDate>
             <endDate>N/A</endDate>
             <notes></notes>
         </segment>
