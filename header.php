@@ -21,5 +21,5 @@ $done = false;
 $potatoes = getPotatoes();
 $activePotatoes = getActivePotatoes($potatoes);
 $inactivePotatoes = getInactivePotatoes($potatoes);
-$Potatoes = $activePotatoes;
+
 ?>

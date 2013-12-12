@@ -1,14 +1,8 @@
 <?php
 include 'header.php';
 
-/*
-* Potato Loader
-*
-* Info: Returns array of Potatoes
-*/
-
 if (isset($_GET['currentPotato'])) {
-		$CurrentPotato = getCurrentPotato($_GET['currentPotato'], $Potatoes);
+		$CurrentPotato = getCurrentPotato($_GET['currentPotato'], $activePotatoes);
 		if (isset($CurrentPotato)) {
 			$arrayValues = array_values($CurrentPotato->timeLine);
 			$TheLastSegment = end($arrayValues);
@@ -115,7 +109,7 @@ if (!empty($_POST['submit'])) {
 					<div class="padding">
 						<h1>Switch Active Potato</h1>
 						<?php
-						foreach ($Potatoes as $Potato) {
+						foreach ($activePotatoes as $Potato) {
 							echo "<h4><a href=\"index.php?currentPotato=".$Potato->name."\">".$Potato->name."</a></h4>";
 						}
 						?>
