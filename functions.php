@@ -10,8 +10,7 @@ function loadPotato( $xml ) {
 		$timeLine[] = new Segment($segment->team, $segment->step, $segment->startDate, $segment->endDate, $segment->notes);
 	}
 	return new Potato( $PotatoXML->name, $PotatoXML->status, $PotatoXML->startDate, 
-		               $PotatoXML->goalLaunchDate, $timeLine, $PotatoXML->ReleaseManager, $PotatoXML->BuildAndRelease, 
-		               $PotatoXML->SiteOps, $PotatoXML->QA, $PotatoXML->done );
+		               $PotatoXML->goalLaunchDate, $timeLine, $PotatoXML->done, $PotatoXML->office, $PotatoXML->targetEnvironment, $PotatoXML->applications );
 }
 
 function getCurrentPotato($potatoName, $potatoes) {
@@ -119,6 +118,11 @@ function populateData( $potato, $string ) {
 	$string = str_replace("%PERSONHOLDING%", $potato->getPersonHolding(), $string);
 	$string = str_replace("%NOTES%", $potato->getLastSegment()->notes, $string);
 	return $string;
+}
+
+function getInformation( $potato ) {
+	$XML = simplexml_load_file("templates/".$potato->step.".html");
+	print_r($XML);
 }
 
 function getStep($step) {

@@ -53,7 +53,6 @@ $selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any P
 				<div id="PotatoHeader">
 					<div id="Version">
 						<a href="index.php"><img src="images/character.png" alt="character" /></a>
-			
 								<?php
 								if ($selectedPotato) {
 									if ($Overtime) {
@@ -80,26 +79,23 @@ $selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any P
 					</div>
 					<?php if ($selectedPotato) { ?>
 					<div id="Team">
-						<h6 style="color: #f1a165;">Build &amp; Release: <?php echo $selectedPotato->getPerson('BuildAndRelease') ?></h6>
-						<h6 style="color: #2e52b8;">SiteOps: <?php echo $selectedPotato->getPerson('SiteOps') ?></h6>
-						<h6 style="color: #2da84a;">Release Manager: <?php echo $selectedPotato->getPerson('ReleaseManager') ?></h6>
-						<h6 style="color: #b82ea0;">QA: <?php echo $selectedPotato->getPerson('QA') ?></h6>
+						<h6>Put some information here</h6>
 					</div>
 					<?php } ?>
 				</div>
-							<div id="content">
+				<div id="content">
 					<div id="navigation">
-						<div class="padding">
-							<h1>Switch Active Potato</h1>
-							<?php
-							foreach ($activePotatoes as $Potato) {
-								echo "<h4><a href=\"index.php?selectedPotato=".$Potato->name."\">".$Potato->name."</a></h4>";
-							}
-							?>
-							<h4>Notes</h4>
-							<h1><a href="create.php">Create Release</a></h1>
-							<h1>View Historical</h1>
+						<div class="padder">
+								<h1>Switch Active Potato</h1>
+								<?php
+								foreach ($activePotatoes as $Potato) {
+									echo "<h4><a href=\"index.php?selectedPotato=".$Potato->name."\">".$Potato->name."</a></h4>";
+								}
+								?>
+								<h4>Notes</h4>
+								<h1><a href="create.php">Create Release</a></h1>
+								<h1>View Historical</h1>
 						</div>
 					</div>
-					<div id="page">
-						<div class="padding">
+					<div id="page" style="">
+						<div class="padder">

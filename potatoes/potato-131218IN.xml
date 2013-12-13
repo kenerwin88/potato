@@ -132,6 +132,13 @@
             <team>SiteOps</team>
             <step>1</step>
             <startDate>Thursday, 12/12/2013 15:48:55</startDate>
+            <endDate>Friday, 12/13/2013 10:40:34</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>SiteOps</team>
+            <step>3</step>
+            <startDate>Friday, 12/13/2013 10:40:34</startDate>
             <endDate>N/A</endDate>
             <notes></notes>
         </segment>

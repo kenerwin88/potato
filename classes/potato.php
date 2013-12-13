@@ -1,23 +1,17 @@
 <?php
 	class Potato {
-		public $name;
-		public $status;
-		public $startDate;
-		public $goalLaunchDate;
-		public $timeLine;
-		public $ReleaseManager, $BuildAndRelease, $SiteOps, $QA, $done;
+		public $name, $status, $startDate, $goalLaunchDate, $timeLine, $done, $office, $targetEnvironment, $applications;
 
-		function __construct($name, $status, $startDate, $goalLaunchDate, $timeLine, $ReleaseManager, $BuildAndRelease, $SiteOps, $QA, $done) {
+		function __construct($name, $status, $startDate, $goalLaunchDate, $timeLine, $done, $office, $targetEnvironment, $applications) {
 			$this->name = (string)$name;
 			$this->status = (string)$status;
 			$this->startDate = (string)$startDate;
 			$this->goalLaunchDate = (string)$goalLaunchDate;
 			$this->timeLine = $timeLine;
-			$this->ReleaseManager = (string)$ReleaseManager;
-			$this->BuildAndRelease = (string)$BuildAndRelease;
-			$this->SiteOps = (string)$SiteOps;
-			$this->QA = (string)$QA;
 			$this->done = (string)$done;
+			$this->office = (string)$office;
+			$this->targetEnvironment = (string)$targetEnvironment;
+			$this->applications = (string)$applications;
 		}
 
 		function getLastSegment() {
@@ -27,15 +21,6 @@
 
 		function getTeamHolding() {
 			return $this->getLastSegment()->team;
-		}
-
-		function getPersonHolding() {
-			$currentTeam = $this->getTeamHolding();
-			return $this->{$currentTeam};
-		}
-
-		function getPerson($team) {
-			return $this->$team;
 		}
 
 		// Returns time in seconds from start date to goal launch date
@@ -56,6 +41,10 @@
 		// Returns time in human readable format from start date to NOW
 		function getTimeFromStartToNow() {
 			return secondsToTime($this->getSecondsFromStartToNow());
+		}
+
+		function getInformation() {
+			return 'Llama';
 		}
 	}
 ?>

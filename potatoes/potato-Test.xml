@@ -62,6 +62,13 @@
             <team>SiteOps</team>
             <step>P</step>
             <startDate>Thursday, 12/12/2013 16:40:56</startDate>
+            <endDate>Friday, 12/13/2013 10:48:27</endDate>
+            <notes></notes>
+        </segment>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>1</step>
+            <startDate>Friday, 12/13/2013 10:48:27</startDate>
             <endDate>N/A</endDate>
             <notes></notes>
         </segment>
