@@ -219,18 +219,26 @@ $writer->flush();
 }
 
 function processPOST( $POST, $selectedPotato ) {
-	if (!empty($POST['submit'])) {
-		$TheLastSegment = $selectedPotato->getLastSegment();
-		$TheLastSegment->endDate = CURRENTDATE;
-		$SegmentObj = new Segment($POST['Team'],$POST['Step'],CURRENTDATE,'N/A', $POST['notes']);
-		$CurrentTeam = $_POST['Team'];
-		$selectedPotato->timeLine[] = $SegmentObj;
+	if ( !empty($POST['submit']) ) {
+		if ( $POST['page'] == 'index' ) {
+			$TheLastSegment = $selectedPotato->getLastSegment();
+			$TheLastSegment->endDate = CURRENTDATE;
+			$SegmentObj = new Segment($POST['Team'],$POST['Step'],CURRENTDATE,'N/A', $POST['notes']);
+			$CurrentTeam = $_POST['Team'];
+			$selectedPotato->timeLine[] = $SegmentObj;
 
-		generateEmail($selectedPotato, ("Step-".$POST['Step']), 'kener@angieslist.com');
+			generateEmail($selectedPotato, ("Step-".$POST['Step']), 'kener@angieslist.com');
 
-		# If Potato on last step, complete it!
-		if ($POST['Step']=="10") {$selectedPotato->done = TRUE;}
-		
+			# If Potato on last step, complete it!
+			if ( $POST['Step'] == "10" ) {$selectedPotato->done = TRUE;}
+		}
+		else if ( $POST['page'] == 'create' ) {
+			$timeLine[] = new Segment('BuildAndRelease', '1', CURRENTDATE, 'N/A', 'Package Created');
+			$goalLaunchDate = date('l, m/d/Y H:i:s', mktime($_POST['hour'], $_POST['minute'], 0, $_POST['month'], $_POST['day'], $_POST['year']));
+			$selectedPotato = new Potato( $_POST['name'], 'cold', date('l, m/d/Y H:i:s'), 
+		    $goalLaunchDate, $timeLine, $_POST['ReleaseManager'], $_POST['BuildAndRelease'], 
+		    $_POST['SiteOps'], $_POST['QA'], 'no');
+		}
 		# Save Potato
 		savePotato($selectedPotato);
 	}

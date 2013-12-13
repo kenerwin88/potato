@@ -1,39 +1,5 @@
-<?php
-include 'header.php';
-
-/*
-* ::AVAILABLE VARIABLES::
-*
-* RELEASEDIRECTORY - Path to Potatoes
-* CURRENTDATE - The date as of RIGHT now
-* $done - Boolean of selected potato status
-* $potatoes - ALL potatoes in RELEASEDIRECTORY
-* $activePotatoes; - ONLY the active (non done) potatoes
-* $inactivePotatoes; - ONLY the inactive (finished) potatoes
-* $selectedPotato - The currently selected potato
-*
-*/
-
-if ($selectedPotato) {
-	$totalTime = timeDifference($selectedPotato->goalLaunchDate, $selectedPotato->startDate);
-	$t = timeDifference($selectedPotato->goalLaunchDate, CURRENTDATE);
-	$percent = ($t / $totalTime * 100);
-	$Overtime = FALSE;
-	if ($percent <= 0) {
-		$Overtime = TRUE;
-		$totalTime = timeDifference(CURRENTDATE, $selectedPotato->startDate);
-	}
-}
-
-$PERCENTEXCESS = 0; # This variable needs to go away, it currently sorta determines the width of things.
-$selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any POST variables.
-?>
-	<body>
-		<div id="wrapper">
-			<header>
-				<a href="index.php"><img src="images/logo.png" /></a>
-				<h2>Potato</h2>
-			</header>
+<?php include 'header.php'; ?>
+	
 			<div id="PotatoHeader">
 				<div id="Version">
 					<a href="index.php"><img src="images/character.png" /></a>
@@ -90,86 +56,7 @@ $selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any P
 					<div class="padding">
 						<h1>Summary</h1>
 						
-
-						<!-- The METER -->
-			    		<div class="meter">
-			    		<?php
-			    		if ($selectedPotato) {
-			    		foreach ($selectedPotato->timeLine as $Segment) {
-			    			$color = 'blue';
-			    			if ($Segment->team == "ReleaseManager") {
-			    				$color = 'green';
-			    				$shortName = 'RM';
-			    			}
-			    			if ($Segment->team == "SiteOps") {
-			    				$color = 'blue';
-			    				$shortName = 'Ops';
-			    			}
-			    			if ($Segment->team == "BuildAndRelease") {
-			    				$color = 'orange';
-			    				$shortName = 'B&amp;R';
-			    			}
-			    			if ($Segment->team == "QA") {
-			    				$color = 'purple';
-			    				$shortName = 'QA';
-			    			}
-			    			if ($Segment->endDate !== "N/A") {
-			    				$timePassed = timeDifference($Segment->endDate, $Segment->startDate);
-			    				$percent = round($timePassed / $totalTime * 100, 2)."%";
-			    				$pWidth = round($timePassed / $totalTime * 99, 2);
-			    				if ($pWidth < 0.5) {
-			    					$percentWidth = "0.5%";
-			    					$PERCENTEXCESS+=0.5;
-			    				} # Make even 1 second look real
-			    				else {
-			    					$percentWidth = round($timePassed / $totalTime * 98, 2)."%";
-			    				}
-			    				
-			    				if ($Segment === reset($selectedPotato->timeLine)) {
-			    					echo "<span class=\"".$color." first\" style=\"width: ".$percentWidth."; display: inline-block;\"><center style=\"color: #fff\">".$shortName." - ".$percent."</center></span>";
-			    				}
-
-			    				else {
-			    					echo "<span class=\"".$color."\" style=\"width: ".$percentWidth."; display: inline-block;\"><center style=\"color: #fff\">".$shortName." - ".$percent."</center></span>";
-			    				}
-			    			}
-			    			else {
-			    				$timePassed = timeDifference(CURRENTDATE,$Segment->startDate);
-			    				$percent = round($timePassed / $totalTime * 100, 2)."%";
-			    				$pWidth = round($timePassed / $totalTime * 99, 2);
-			    				if ($pWidth < 0.5) {
-			    					$percentWidth = "0.5%";
-			    					$PERCENTEXCESS+=0.5;
-			    				} # Make even 1 second look real
-			    				else {
-			    					$percentWidth = round($timePassed / $totalTime * 98, 2)."%";
-			    				}
-			    				if ($Segment === reset($selectedPotato->timeLine)) {
-			    					echo "<span class=\"".$color." first\" style=\"width: ".$percentWidth."; display: inline-block;\"><center style=\"color: #fff\">".$shortName." - ".$percent."</center></span>";
-			    				}
-			    				
-			    				else {
-			    					echo "<span class=\"".$color."\" style=\"width: ".$percentWidth."; display: inline-block;\"><center style=\"color: #fff\">".$shortName." - ".$percent."</center></span>";
-			    				}
-			    			}
-			    		}
-			    		$t = timeDifference($selectedPotato->goalLaunchDate, CURRENTDATE);
-			    		if ($selectedPotato->done=='yes') {
-			    			$t = timeDifference($selectedPotato->goalLaunchDate, $selectedPotato->getLastSegment()->endDate);
-			    		}
-			    		$percent = round($t / $totalTime * 100, 2)."%";
-			    		$percentWidth = round(($t / $totalTime * 99)-$PERCENTEXCESS, 2)."%"; // This is so that the width doesn't accidently go over... ignore
-
-			    		if ($Overtime) {
-			    		}
-			    		else {
-			    			echo "<span class=\"black last\" style=\"width: ".$percentWidth."; display: inline-block;\"><center style=\"color: #fff\">Percent Remaining: ".$percent."</center></span>";
-			    		}
-
-			    		?>
-			    		</div>
-			    		<!-- END METER -->
-			    		
+	
 						<p>Currently held by: <b><?php echo $selectedPotato->getPersonHolding() . " - " . $selectedPotato->getTeamHolding(); ?></b></p>
 						<p>Held for: <b><?php 
 				    		
@@ -196,6 +83,7 @@ $selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any P
 				    		</b>
 				    		<center>
 				    		<form method="post">
+				    		<input type="hidden" name="page" id="page" value="index" />
 				    		<div id="pass" style="border:2px dotted; border-radius:25px; width: 300px; padding: 10px;">
 				    		<h2>Pass <?php echo $selectedPotato->name ?> <img src="images/potato.png" /></h2>
 				    			Select Team: <br/>
@@ -228,8 +116,6 @@ $selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any P
 				    		</div>
 				    		</form>
 				    		</center>
-
-				    		<?php } else {echo "Please select a release!";} ?>
 						</p>
 					</div>
 				</div>

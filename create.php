@@ -1,55 +1,11 @@
-<?php
-include 'header.php';
-$DONE = false;
-
-if (isset($_POST['submit'])) {
-	$timeLine[] = new Segment('BuildAndRelease', '1', CURRENTDATE, 'N/A', 'Package Created');
-	$goalLaunchDate = date('l, m/d/Y H:i:s', mktime($_POST['hour'], $_POST['minute'], 0, $_POST['month'], $_POST['day'], $_POST['year']));
-	$potato = new Potato( $_POST['name'], 'cold', date('l, m/d/Y H:i:s'), 
-		              	  $goalLaunchDate, $timeLine, $_POST['ReleaseManager'], $_POST['BuildAndRelease'], 
-		               	  $_POST['SiteOps'], $_POST['QA'], 'no');
-	savePotato($potato);
-}
-
-
-if (isset($_GET['currentPotato'])) {
-		$CurrentPotato = getCurrentPotato($_GET['currentPotato'], $activePotatoes);
-		$TheLastSegment = end(array_values($CurrentPotato->timeLine));
-	}
-	else {$CurrentPotato = false;}
-?>
-	<body>
-		<div id="wrapper">
-			<header>
-				<img src="images/logo.png" />
-				<h2>Potato</h2>
-			</header>
+<?php include 'header.php'; ?>
 			<div id="PotatoHeader">
 				<div id="Version">
 					<img src="images/character.png" />
 					<h1>
-						<?php
-						if ($CurrentPotato) {
-							if ($Overtime) {
-								echo '<span style="color: red;">';
-								echo $CurrentPotato->name;
-								echo '<h6>Start Date: ',$CurrentPotato->startDate,'</h6>';
-								echo '<h6>Goal Date: ',$CurrentPotato->goalLaunchDate,'</h6>';
-								echo '</span>';
-							}
-							else {
-								echo $CurrentPotato->name;
-								echo '<h6>Start Date: ',$CurrentPotato->startDate,'</h6>';
-								echo '<h6>Goal Date: ',$CurrentPotato->goalLaunchDate,'</h6>';
-							}
-							
-						}
-						else {
-							echo 'No Potato Selected';
-							echo '<h6>Start Date: N/A</h6>';
-							echo '<h6>Goal Date: N/A</h6>';
-						}
-						?>
+						No Potato Selected
+						<h6>Start Date: N/A</h6>
+						<h6>Goal Date: N/A</h6>
 					</h1>
 					
 				</div>
@@ -60,7 +16,7 @@ if (isset($_GET['currentPotato'])) {
 						<h1>Switch Active Potato</h1>
 						<?php
 						foreach ($activePotatoes as $Potato) {
-							echo "<h4><a href=\"index.php?currentPotato=".$Potato->name."\">".$Potato->name."</a></h4>";
+							echo "<h4><a href=\"index.php?selectedPotato=".$Potato->name."\">".$Potato->name."</a></h4>";
 						}
 						?>
 						<h4>Notes</h4>
@@ -71,7 +27,8 @@ if (isset($_GET['currentPotato'])) {
 			<div id="page">
 					<div class="padding">
 						<center>
-				    		<form method="post" >
+				    		<form method="post">
+				    		<input type="hidden" name="page" id="page" value="create" />
 				    		<div id="pass" >
 				    		<h2>Create Release <img src="images/potato.png" /></h2>
 				    			

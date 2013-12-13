@@ -2,7 +2,7 @@
     <name>Maaa</name>
     <startDate>Thursday, 12/12/2013 17:21:20</startDate>
     <goalLaunchDate>Friday, 12/20/2013 00:00:00</goalLaunchDate>
-    <done>no</done>
+    <done>1</done>
     <status>cold</status>
     <ReleaseManager>carried@angieslist.com</ReleaseManager>
     <BuildAndRelease>balajiv@angieslist.com</BuildAndRelease>
@@ -13,8 +13,15 @@
             <team>BuildAndRelease</team>
             <step>1</step>
             <startDate>Thursday, 12/12/2013 17:21:20</startDate>
-            <endDate>N/A</endDate>
+            <endDate>Thursday, 12/12/2013 22:37:59</endDate>
             <notes>Package Created</notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>10</step>
+            <startDate>Thursday, 12/12/2013 22:37:59</startDate>
+            <endDate>N/A</endDate>
+            <notes></notes>
         </segment>
     </timeline>
 </xml>
