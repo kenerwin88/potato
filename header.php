@@ -43,6 +43,14 @@ $selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any P
 			<title>Potato - Deployment Tracker</title>
 			<link rel="stylesheet" type="text/css" href="css/style.css">
 			<?php if ($done) {echo '<meta http-equiv="refresh" content="5; URL=index.php" />';} ?>
+			<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+			<script src="js/jquery-2.0.3.js"></script>
+			<script src="js/jquery-ui.js"></script>
+			<script>
+				$(function() {
+					$( "#date" ).datepicker();
+				});
+			</script>
 		</head>
 		<body>
 			<div id="wrapper">
@@ -55,19 +63,9 @@ $selectedPotato = processPOST($_POST, $selectedPotato); # Do processing on any P
 						<a href="index.php"><img src="images/character.png" alt="character" /></a>
 								<?php
 								if ($selectedPotato) {
-									if ($Overtime) {
-										echo '<span style="color: red;">';
 										echo '<h1>' . $selectedPotato->name . '</h1>';
 										echo '<h6>Start Date: ',$selectedPotato->startDate,'</h6>';
 										echo '<h6>Goal Date: ',$selectedPotato->goalLaunchDate,'</h6>';
-										echo '</span>';
-									}
-									else {
-										echo '<h1>' . $selectedPotato->name . '</h1>';
-										echo '<h6>Start Date: ',$selectedPotato->startDate,'</h6>';
-										echo '<h6>Goal Date: ',$selectedPotato->goalLaunchDate,'</h6>';
-									}
-									
 								}
 								else {
 									echo 'No Potato Selected';

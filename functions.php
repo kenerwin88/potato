@@ -115,7 +115,6 @@ function generateEmail($potato, $template, $to) {
 function populateData( $potato, $string ) {
 	$string = str_replace("%RELEASENAME%", $potato->name, $string);
 	$string = str_replace("%TEAMHOLDING%", $potato->getTeamHolding(), $string);
-	$string = str_replace("%PERSONHOLDING%", $potato->getPersonHolding(), $string);
 	$string = str_replace("%NOTES%", $potato->getLastSegment()->notes, $string);
 	return $string;
 }
@@ -202,10 +201,9 @@ function savePotato($potato) {
 	$writer->writeElement('goalLaunchDate', $potato->goalLaunchDate);
 	$writer->writeElement('done', $potato->done);
 	$writer->writeElement('status', $potato->status);
-	$writer->writeElement('ReleaseManager', $potato->ReleaseManager);
-	$writer->writeElement('BuildAndRelease', $potato->BuildAndRelease);
-	$writer->writeElement('SiteOps', $potato->SiteOps);
-	$writer->writeElement('QA', $potato->QA);
+	$writer->writeElement('office', $potato->office);
+	$writer->writeElement('targetEnvironment', $potato->targetEnvironment);
+	$writer->writeElement('applications', $potato->applications);
 	$writer->startElement('timeline');
 	foreach ($potato->timeLine as $Segment) {
 		$writer->startElement('segment');
@@ -238,10 +236,10 @@ function processPOST( $POST, $selectedPotato ) {
 		}
 		else if ( $POST['page'] == 'create' ) {
 			$timeLine[] = new Segment('BuildAndRelease', '1', CURRENTDATE, 'N/A', 'Package Created');
-			$goalLaunchDate = date('l, m/d/Y H:i:s', mktime($_POST['hour'], $_POST['minute'], 0, $_POST['month'], $_POST['day'], $_POST['year']));
-			$selectedPotato = new Potato( $_POST['name'], 'cold', date('l, m/d/Y H:i:s'), 
-		    $goalLaunchDate, $timeLine, $_POST['ReleaseManager'], $_POST['BuildAndRelease'], 
-		    $_POST['SiteOps'], $_POST['QA'], 'no');
+			$dateExplode = explode("/",$POST['date']);
+			$goalLaunchDate = date('l, m/d/Y H:i:s', mktime(23, 59, 0, $dateExplode[0], $dateExplode[1], $dateExplode[2]));
+			$selectedPotato = new Potato( $POST['name'], 'cold', date('l, m/d/Y H:i:s'), 
+		    $goalLaunchDate, $timeLine, 'no', $POST['office'], $POST['targetEnvironment'], 'noapps');
 		}
 		# Save Potato
 		savePotato($selectedPotato);

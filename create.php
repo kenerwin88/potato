@@ -1,7 +1,4 @@
 <?php include 'header.php'; ?>
-ADD THIS
-http://jqueryui.com/datepicker/
-THANK YOU!
 
 <form method="post">
 	<input type="hidden" name="page" value="create" />
@@ -9,48 +6,12 @@ THANK YOU!
 		<h2>Create Release <img src="images/potato.png" alt="potato" /></h2>
 
 		Release Name: <input type="text" name="name"><br/>
-		Goal Launch Date: 
-
-		<?php
-		$lowestYear = 2013;
-		$highestYear = 2020;
-		?>
-
-		<select name="month">
-		<?php foreach(range(1,12) as $month): ?> 
-		<option value="<?php echo $month;?>"><?php echo  date("F", mktime(0, 0, 0, $month, 10));?></option>
-		<?php endforeach ?>
-		</select>
-
-		<select name="day">
-		<?php foreach(range(1,31)as $day): ?>
-		<option value="<?php echo $day;?>"><?php echo $day;?></option> 
-		<?php endforeach ?>
-		</select>
-
-		<select name="year">
-		<?php foreach (range($lowestYear,$highestYear) as $year):?>
-		<option value="<?php echo $year;?>"><?php echo $year;?></option>
-		<?php endforeach?>
-		</select>
-
-		<select name="hour">
-		<?php foreach (range(0,23) as $hour):?>
-		<option value="<?php echo $hour;?>"><?php echo $hour;?></option>
-		<?php endforeach?>
-		</select>
-		:
-		<select name="minute">
-		<?php foreach (range(0,50) as $minute):?>
-		<option value="<?php echo $minute;?>"><?php echo $minute;?></option>
-		<?php endforeach?>
-		</select>
-		<br/>
-		Office: <input type="radio" name="stage" value="Office">Indy
-				   <input type="radio" name="stage" value="Office">Palo<br/>
-		Deploy To: <input type="radio" name="stage" value="Stage1">Stage1
-				   <input type="radio" name="stage" value="Stage2">Stage2
-				   <input type="radio" name="group1" value="Both">Both 
+		<p>Goal Launch Date: <input type="text" id="date" name="date"></p>
+		Office: <input type="radio" name="office" value="Indy">Indy
+				   <input type="radio" name="office" value="Palo">Palo<br/>
+		Deploy To: <input type="radio" name="targetEnvironment" value="Stage1">Stage1
+				   <input type="radio" name="targetEnvironment" value="Stage2">Stage2
+				   <input type="radio" name="targetEnvironment" value="Both">Both 
 				   <br/><br/>
 		Included Applications:<br/>
 		<table>
