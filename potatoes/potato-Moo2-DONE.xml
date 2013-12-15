@@ -1,0 +1,26 @@
+<xml>
+    <name>Moo2</name>
+    <startDate>Sunday, 12/15/2013 10:18 am</startDate>
+    <goalLaunchDate>Monday, 12/16/2013 11:59:00 pm</goalLaunchDate>
+    <done>1</done>
+    <status>cold</status>
+    <office>Palo</office>
+    <targetEnvironment>Stage1</targetEnvironment>
+    <applications>noapps</applications>
+    <timeline>
+        <segment>
+            <team>BuildAndRelease</team>
+            <step>1</step>
+            <startDate>Sunday, 12/15/2013 10:18:46 am</startDate>
+            <endDate>Sunday, 12/15/2013 10:24:25 am</endDate>
+            <notes>Package Created</notes>
+        </segment>
+        <segment>
+            <team>ReleaseManager</team>
+            <step>10</step>
+            <startDate>Sunday, 12/15/2013 10:24:25 am</startDate>
+            <endDate>N/A</endDate>
+            <notes></notes>
+        </segment>
+    </timeline>
+</xml>

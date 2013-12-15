@@ -12,7 +12,7 @@ include 'classes/segment.php';
 
 # Declare Constants
 define('RELEASEDIRECTORY', 'potatoes/');  
-define('CURRENTDATE', date('l, m/d/Y H:i:s')); 
+define('CURRENTDATE', date('l, m/d/Y g:i:s a')); 
 
 # Declare Variables
 $done = false; 

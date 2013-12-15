@@ -237,8 +237,8 @@ function processPOST( $POST, $selectedPotato ) {
 		else if ( $POST['page'] == 'create' ) {
 			$timeLine[] = new Segment('BuildAndRelease', '1', CURRENTDATE, 'N/A', 'Package Created');
 			$dateExplode = explode("/",$POST['date']);
-			$goalLaunchDate = date('l, m/d/Y H:i:s', mktime(23, 59, 0, $dateExplode[0], $dateExplode[1], $dateExplode[2]));
-			$selectedPotato = new Potato( $POST['name'], 'cold', date('l, m/d/Y H:i:s'), 
+			$goalLaunchDate = date('l, m/d/Y g:i:s a', mktime(23, 59, 0, $dateExplode[0], $dateExplode[1], $dateExplode[2]));
+			$selectedPotato = new Potato( $POST['name'], 'cold', date('l, m/d/Y g:i:s a'), 
 		    $goalLaunchDate, $timeLine, 'no', $POST['office'], $POST['targetEnvironment'], 'noapps');
 		}
 		# Save Potato
